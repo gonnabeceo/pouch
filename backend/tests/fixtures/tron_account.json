@@ -1,0 +1,57 @@
+{
+ "data": [
+  {
+   "address": "41c310687a11444a22f08eb43e46a9306d8da17e49",
+   "balance": 15061432850,
+   "frozenV2": [
+    {
+     "amount": 500079328700
+    },
+    {
+     "amount": 5633363336300,
+     "type": "ENERGY"
+    },
+    {
+     "type": "TRON_POWER"
+    }
+   ],
+   "trc20": [
+    {
+     "TL81r5Zze7Av4DiKxCBzCbtDnUQVSQfm82": "22416100000000000000000"
+    },
+    {
+     "TRLc6LPTebXKtEnoiDbK7E1rvwzknNhmf2": "8818355822674216000000"
+    },
+    {
+     "TT4bNuDmpbkyJvZ5VVRAyGL8CCeVyAAy9Z": "14028140000000000000000"
+    },
+    {
+     "TJF75etQcTm742X9eo85xh5mPLw6Kvb2of": "14866936000000000000000"
+    },
+    {
+     "TZ6aKdusb3rbJETu7f71EzgAHzyMQrjkqi": "2355859800000000000000"
+    },
+    {
+     "TJCHXErFKrVSwKwasYz2RAwnfPQRqvL14j": "4658575811164"
+    },
+    {
+     "TNieeNFvrRuAQKyXGrQQWu4tbe3UDGexTm": "4303891200000000000000"
+    },
+    {
+     "TKBHnouHu2n58D5pKGywBkb9976Wbojxdq": "62057602747793037000000"
+    },
+    {
+     "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t": "59193555188"
+    },
+    {
+     "TXkndN1LnoRPdTdiNRj1ifr5F6ux5c8rmw": "642754912800000000000000"
+    }
+   ],
+   "delegated_frozenV2_balance_for_bandwidth": 56888446300,
+   "account_resource": {
+    "delegated_frozenV2_balance_for_energy": 123018833700
+   }
+  }
+ ],
+ "success": true
+}

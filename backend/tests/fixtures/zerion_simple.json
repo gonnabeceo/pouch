@@ -1,0 +1,457 @@
+{
+ "links": {
+  "self": "https://api.zerion.io/v1/wallets/x/positions/"
+ },
+ "data": [
+  {
+   "type": "positions",
+   "id": "eth-ethereum",
+   "attributes": {
+    "parent": null,
+    "protocol": null,
+    "name": "Asset",
+    "position_type": "wallet",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 1.5,
+     "numeric": "1.5"
+    },
+    "value": 6000.0,
+    "price": 4000.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": null
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "ethereum"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "eth"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "eth-base",
+   "attributes": {
+    "parent": null,
+    "protocol": null,
+    "name": "Asset",
+    "position_type": "wallet",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 0.25,
+     "numeric": "0.25"
+    },
+    "value": 1000.0,
+    "price": 4000.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": null
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "base"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "eth"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "usdc-base",
+   "attributes": {
+    "parent": null,
+    "protocol": null,
+    "name": "Asset",
+    "position_type": "wallet",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 1200.5,
+     "numeric": "1200.5"
+    },
+    "value": 1200.5,
+    "price": 1.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "USD Coin",
+     "symbol": "USDC",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": null
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "base"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "usdc"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "dust-arb",
+   "attributes": {
+    "parent": null,
+    "protocol": null,
+    "name": "Asset",
+    "position_type": "wallet",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 0.5,
+     "numeric": "0.5"
+    },
+    "value": 0.2,
+    "price": 0.4,
+    "changes": null,
+    "fungible_info": {
+     "name": "Arbitrum",
+     "symbol": "ARB",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": null
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "arbitrum"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "arb"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "spam-1",
+   "attributes": {
+    "parent": null,
+    "protocol": null,
+    "name": "Asset",
+    "position_type": "wallet",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 10000.0,
+     "numeric": "10000"
+    },
+    "value": null,
+    "price": null,
+    "changes": null,
+    "fungible_info": {
+     "name": "Visit to claim",
+     "symbol": "CLAIM-REWARD.COM",
+     "icon": null,
+     "flags": {
+      "verified": false
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": true
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": null
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "polygon"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "spam1"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "spam-2",
+   "attributes": {
+    "parent": null,
+    "protocol": null,
+    "name": "Asset",
+    "position_type": "wallet",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 500.0,
+     "numeric": "500"
+    },
+    "value": 0.0,
+    "price": 0.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "Free airdrop",
+     "symbol": "FREE",
+     "icon": null,
+     "flags": {
+      "verified": false
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": true
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": null
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "base"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "spam2"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "receipt",
+   "attributes": {
+    "parent": null,
+    "protocol": null,
+    "name": "Asset",
+    "position_type": "wallet",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 2.0,
+     "numeric": "2"
+    },
+    "value": 8000.0,
+    "price": 4000.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "Aave Ethereum WETH",
+     "symbol": "aEthWETH",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": false,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": null
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "ethereum"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "aeth"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "empty",
+   "attributes": {
+    "parent": null,
+    "protocol": null,
+    "name": "Asset",
+    "position_type": "wallet",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 0.0,
+     "numeric": "0"
+    },
+    "value": 0.0,
+    "price": 1.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "Dai",
+     "symbol": "DAI",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": null
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "ethereum"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "dai"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "noprice",
+   "attributes": {
+    "parent": null,
+    "protocol": null,
+    "name": "Asset",
+    "position_type": "wallet",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 42.0,
+     "numeric": "42"
+    },
+    "value": null,
+    "price": null,
+    "changes": null,
+    "fungible_info": {
+     "name": "Unpriced",
+     "symbol": "XYZ",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": null
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "base"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "xyz"
+     }
+    }
+   }
+  }
+ ]
+}

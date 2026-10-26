@@ -1,0 +1,215 @@
+{
+ "links": {
+  "self": "https://api.zerion.io/v1/wallets/x/positions/"
+ },
+ "data": [
+  {
+   "type": "positions",
+   "id": "aave-dep",
+   "attributes": {
+    "parent": null,
+    "protocol": "Aave V3",
+    "name": "Asset",
+    "position_type": "deposit",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 2.0,
+     "numeric": "2"
+    },
+    "value": 8000.0,
+    "price": 4000.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": {
+     "name": "Aave V3"
+    }
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "ethereum"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "eth"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "aave-loan",
+   "attributes": {
+    "parent": null,
+    "protocol": "Aave V3",
+    "name": "Asset",
+    "position_type": "loan",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 3000.0,
+     "numeric": "3000"
+    },
+    "value": 3000.0,
+    "price": 1.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "USD Coin",
+     "symbol": "USDC",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": {
+     "name": "Aave V3"
+    }
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "ethereum"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "usdc"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "lido",
+   "attributes": {
+    "parent": null,
+    "protocol": "Lido",
+    "name": "Asset",
+    "position_type": "staked",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 1.0,
+     "numeric": "1"
+    },
+    "value": 3990.0,
+    "price": 3990.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "Lido Staked ETH",
+     "symbol": "stETH",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": {
+     "name": "Lido"
+    }
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "ethereum"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "steth"
+     }
+    }
+   }
+  },
+  {
+   "type": "positions",
+   "id": "reward",
+   "attributes": {
+    "parent": null,
+    "protocol": "Aave V3",
+    "name": "Asset",
+    "position_type": "reward",
+    "quantity": {
+     "int": "0",
+     "decimals": 18,
+     "float": 0.1,
+     "numeric": "0.1"
+    },
+    "value": 30.0,
+    "price": 300.0,
+    "changes": null,
+    "fungible_info": {
+     "name": "Aave",
+     "symbol": "AAVE",
+     "icon": null,
+     "flags": {
+      "verified": true
+     },
+     "implementations": []
+    },
+    "flags": {
+     "displayable": true,
+     "is_trash": false
+    },
+    "updated_at": "2026-10-26T01:00:00Z",
+    "application_metadata": {
+     "name": "Aave V3"
+    }
+   },
+   "relationships": {
+    "chain": {
+     "links": {},
+     "data": {
+      "type": "chains",
+      "id": "ethereum"
+     }
+    },
+    "fungible": {
+     "links": {},
+     "data": {
+      "type": "fungibles",
+      "id": "aave"
+     }
+    }
+   }
+  }
+ ]
+}

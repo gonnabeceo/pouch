@@ -1,0 +1,27 @@
+# Зашифрованная база, метаданные KDF и бэкапы — никогда в репозиторий
+data/
+*.db
+*.db-*
+*.meta.json
+*.bak
+
+.env
+.env.*
+
+backend/.venv/
+__pycache__/
+.pytest_cache/
+frontend/node_modules/
+frontend/dist/
+.DS_Store
+
+# Локальные настройки инструментов
+.claude/
+
+# Файлы экспорта и бэкапы: в них данные кошельков
+pouch-backup-*.zip
+pouch-snapshots-*.csv
+pouch-snapshots-*.json
+pouch-assets-*.csv
+pouch-assets-*.json
+Pouch — *

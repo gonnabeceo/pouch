@@ -1,0 +1,452 @@
+{
+ "balances": [
+  {
+   "balance": "723100000",
+   "wallet_address": {
+    "address": "0:95c52b6c2fe48f7367d618dd6a18c679d398ebfd29c9150524b16777e07dae3d",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:749ed6c9ecda14f077203687f24327e609bc959decff92b36166f4097e8d9183",
+    "name": "Nova BIT",
+    "symbol": "NVB",
+    "decimals": 9,
+    "verification": "blacklist",
+    "score": 0,
+    "description": "Hello"
+   },
+   "balance_lt": 77575625769609
+  },
+  {
+   "balance": "723100000",
+   "wallet_address": {
+    "address": "0:f93477b162401dd175df2b2d204984bb669c7f29962d759746b5ab38d8b357c9",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:50edd4c23d7cad14ffaeaebd7ce79fcc5bff4a34f23bcbfae1a3bdaeb6d0f7d9",
+    "name": "Things",
+    "symbol": "Thick",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "Hello world"
+   },
+   "balance_lt": 76559582774509
+  },
+  {
+   "balance": "7231000000000",
+   "wallet_address": {
+    "address": "0:06552f4360e394aee6e90cfb52c5d35b96cbdd0965ea977b15e0f66b831b1784",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:e7b6133a0e364b22543f950942c2d8fe133d94ad8ce9594578f776dc71ccfe46",
+    "name": "Make Gram Great Again",
+    "symbol": "MGRMGA",
+    "decimals": 9,
+    "verification": "whitelist",
+    "score": 0,
+    "description": "Fully decentralized MEME coin by the GRAM (GRM) community. Make Gram Great Again! Not affiliated with Telegram or TON Foundation."
+   },
+   "balance_lt": 70494926443204
+  },
+  {
+   "balance": "3094868000000",
+   "wallet_address": {
+    "address": "0:9f0329b38b5ac0ef97b1163cf5e1f6590f6b3745c5e63cdcdbdfefd458f020b0",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:e9688a0d14f794f2db27195034b915eeba2b15da55d676ea22eb66e0989d0d63",
+    "name": "LOCKED TONNEL",
+    "symbol": "TONNEL 💎 Unlock at TONNEL.ME",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "TONNEL Unlock at tonnel.me #55358388178341"
+   },
+   "balance_lt": 64945502724207
+  },
+  {
+   "balance": "86193520000",
+   "wallet_address": {
+    "address": "0:0727a77469d2bb46d28783e3f27523149b3a778fbb11c675ed38cd845a4dcd27",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:19e5bc74a0a2445fec46c632ac597932feda8168f860c0f02dffe21ee2d3340f",
+    "name": "LOCKED GRAM",
+    "symbol": "GRAM Unlock at gramunlock.org",
+    "decimals": 9,
+    "verification": "blacklist",
+    "score": 0,
+    "description": "GRAM Unlock at gramunlock.org #1782667249806"
+   },
+   "balance_lt": 62689299120010
+  },
+  {
+   "balance": "72310000000",
+   "wallet_address": {
+    "address": "0:ce43f46f4fbec2fbf2ceb9252418be8a78bd16b1832bd91e8f6aab48405481ba",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:6320a6c56fd7835b72fce82d24e9fa57e79ce7feba8ecdc0fce4e4f119d7df7a",
+    "name": "GRAM AIRDROP",
+    "symbol": "GRAM AT GRAMEVENT.ORG",
+    "decimals": 9,
+    "verification": "blacklist",
+    "score": 0,
+    "description": "GRAM at GRAMEVENT.ORG #1782165709379"
+   },
+   "balance_lt": 61790976081808
+  },
+  {
+   "balance": "1807750000000",
+   "wallet_address": {
+    "address": "0:e7871d12c99cca790a90351ac796bd7dfeb3b1d6daf170f0b02593aac6fbc83a",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:f4d5f9d9f0603cfe8a784ac99b2c505ffab2fcfc629c3dd6873c7fba31dc7682",
+    "name": "Ursi",
+    "symbol": "Usi",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "Uma ferramenta pragmática"
+   },
+   "balance_lt": 57549275097304
+  },
+  {
+   "balance": "723100000",
+   "wallet_address": {
+    "address": "0:00df1edce151fda44234b0439217557a24915f83924a5eb979d990b1a8c1a450",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:746de4f14ad99d855ae2e2cf9c625c1825a1bf6624799692ee7c2342d95594c5",
+    "name": "TASTE AI",
+    "symbol": "TAI",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "Taste AI ($TAI), TON blokzinciri üzerinde inşa edilmiş yeni nesil bir Web3 ödeme aracı ve yapay zeka destekli gastronomi ekosistemidir. Çoklu swap desteği sayesinde kolayca takas edilebilen ve fiziksel işletmelerde anlık ödemeleri kolaylaştıran Taste AI, aynı zamanda kullanıcıların likidite havuzları (Pool) üzerinden pasif gelir elde etmesini sağlar."
+   },
+   "balance_lt": 54073974063912
+  },
+  {
+   "balance": "253085000",
+   "wallet_address": {
+    "address": "0:2066bc82ead142749127826ada71734227b6a5a4e0b36deaefec2835573bd58e",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:896e9d240693f03e8046f94e42f9c59f3ff8e792cbe8b467c0acf179d10f508a",
+    "name": "Ton Raffles Token",
+    "symbol": "RAFF",
+    "decimals": 9,
+    "verification": "whitelist",
+    "score": 81,
+    "description": "$RAFF is a unique utility token, the centerpiece of tonraffles.app ecosystem."
+   },
+   "balance_lt": 54073818597402
+  },
+  {
+   "balance": "7231000000000",
+   "wallet_address": {
+    "address": "0:2644e96e0e6e67f4fb6d95c5426b258b3008c6c102d81fe27b433a25ad63fe79",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:cc19284c33da0cb48d998d5f9884ad26ee7c086833977d0adc68b58bae14cd01",
+    "name": "Kaution TON",
+    "symbol": "KTU",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "Individual game token for integration into Telegram bots"
+   },
+   "balance_lt": 54073713747909
+  },
+  {
+   "balance": "723100000",
+   "wallet_address": {
+    "address": "0:4b36982cc9828ac2cdc9034b29837fc35f9233419e74080d5874ee79003e6b7c",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:ef851a56740905c45206f8e629d15c56ed39219812ec7d3f21808b99397c2667",
+    "name": "Iredium",
+    "symbol": "IDU",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "A token for profitable payments in the DC TON ecosystem and web3 services."
+   },
+   "balance_lt": 54073667469513
+  },
+  {
+   "balance": "72310",
+   "wallet_address": {
+    "address": "0:b407a52cf8453da6ec5ae05547a8b825f0e6456e3fe988b539ce7e6894da350b",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:0d877300dd6aadd9a9bb3fe511b2e4e6363bcbd195fb629dfc1dcfc7db83e513",
+    "name": "NOTx coin",
+    "symbol": "NOTX",
+    "decimals": 0,
+    "verification": "none",
+    "score": 0,
+    "description": "A meme coin probably everything"
+   },
+   "balance_lt": 54073666746403
+  },
+  {
+   "balance": "289312310000",
+   "wallet_address": {
+    "address": "0:b550867e8f7da602394af731338eb20e0f2ef7048d7b7d8efc7852b3b071cd8a",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:722d939a05ba6bf44c0da275ca11f92464bd6f88db181decf1c390952b8061d3",
+    "name": "DINJA",
+    "symbol": "DINJA",
+    "decimals": 9,
+    "verification": "whitelist",
+    "score": 33,
+    "description": "Дыня лучше, чем арбуз. Памп: https://t.me/AntiArbuzAlliance"
+   },
+   "balance_lt": 54073625529709
+  },
+  {
+   "balance": "36878100000",
+   "wallet_address": {
+    "address": "0:f8deddbe5a14bff00e3762f8d3e42b678686aed73090b4456d09aa42e7bae522",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:4be4c4aa517f1d6e53826107f62cec6330382b9b4a3d9eb7132db8bab717e093",
+    "name": "LandWolfNOT",
+    "symbol": "WolfNOT",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0
+   },
+   "balance_lt": 54073618298701
+  },
+  {
+   "balance": "32539500000",
+   "wallet_address": {
+    "address": "0:05cc005a53ddaa4b20e8aed68d64a974aa929ba2e87ed4ee9308d84039ab785a",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:1950e849515b8a16ad76799b009d949d5d85aa920decfa6f23ac9fca34da1c56",
+    "name": "adassm",
+    "symbol": "fsfsczcxzcsdcsdsdfsf",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "Official token of the Nikandr Surkov Youtube channel :) https://www.youtube.com/@NikandrSurkov"
+   },
+   "balance_lt": 54073496094801
+  },
+  {
+   "balance": "166573316000000",
+   "wallet_address": {
+    "address": "0:740a91d50405c2d5c46629bba6af20a9af505a17ffa8c8dcec8a7ca4c3a6e14f",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:21442fe867807d560325b5f36410d49d2e4b653000cf13bdf322221c2fa7acda",
+    "name": "TON Drift",
+    "symbol": "DRIFT",
+    "decimals": 10,
+    "verification": "whitelist",
+    "score": 0,
+    "description": "Exploring the world of blockchain with the TON community. Telegram community -https://t.me/ton_drift"
+   },
+   "balance_lt": 54073389076011
+  },
+  {
+   "balance": "723100000000000000000000",
+   "wallet_address": {
+    "address": "0:1e0d400794693b1b32504c564c0452d14c847ed8c74ae5cda85cbdfffa74945d",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:d831c65fe8e01db6f84999af3cef01ddc87fdda308d85a888e7fdcf2e4c9b9fa",
+    "name": "BUBATZ COIN  official (CSC/DCV).",
+    "symbol": "BBC",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "BBC Bubatz Meme Coin (BBC) – Die dezentrale Währung für Cannabis-Liebhaber. 🌿\n\nDer BBC Coin vereint Humor und Dezentralisierung"
+   },
+   "balance_lt": 54073342797614
+  },
+  {
+   "balance": "9",
+   "wallet_address": {
+    "address": "0:a0d2e84736cca55a670d6edd9fa484440af6df4e85c482fc6c7b13e9ed0d08b8",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:57e8af5a5d59779d720d0b23cf2fce82e0e355990f2f2b7eb4bba772905297a4",
+    "name": "GEMSTON",
+    "symbol": "GEMSTON",
+    "decimals": 9,
+    "verification": "whitelist",
+    "score": 100,
+    "description": "GEMSTON is an engagement token used to incentivize active participation in the STON.fi protocol."
+   },
+   "balance_lt": 54073342797607
+  },
+  {
+   "balance": "30726724455000",
+   "wallet_address": {
+    "address": "0:9eec75380db7064b778540d69c1479f8f7256d8bd2b0cb0e5da16fd32ddb0b6e",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:2f956143c461769579baef2e32cc2d7bc18283f40d20bb03e432cd603ac33ffc",
+    "name": "Notcoin",
+    "symbol": "NOT",
+    "decimals": 9,
+    "verification": "whitelist",
+    "score": 98
+   },
+   "balance_lt": 54073287842014
+  },
+  {
+   "balance": "7231000000",
+   "wallet_address": {
+    "address": "0:00acf4d7d6fe8a5b210303f36e9f16b4cc4b0b0cf2e8a9058cbee08eb89f22f3",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:9896f1698b4e0015e6de174c7829ac8a8a813176f3f6de2c2d4c9e3919a6934c",
+    "name": "PAPA",
+    "symbol": "PAPA",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "PAPA is here. All is here. The great meme token of the PAPA community."
+   },
+   "balance_lt": 54073243009812
+  },
+  {
+   "balance": "723100000000000000000",
+   "wallet_address": {
+    "address": "0:f8035decfabef85e2608c1e2585e169df85dd03d324904342d99dc08f6f74bce",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:c0897c57f09d821e8e2e9f6980605b9ec48eb6d18df70967cb1592beecb711f4",
+    "name": "Magic Vip People",
+    "symbol": "MVP",
+    "decimals": 18,
+    "verification": "whitelist",
+    "score": 0,
+    "description": "🚀 MVP  🎁 community member  management token Mining VWS + 17 types  Tokens.  VWS Payload Token.  Mining $VWS tokens + 17 varieties of tokens  +17 different coins VWS Game Chats with + 17 types of tokens international socials https://t.me/MagicVipClub EN https://t.me/MagicNFTcollections https://t.me/MagicVipPeople https://t.me/MagicNftClub RU  https://t.me/VirtualsWorlds     Mining NFTs  https://getgems.io/virtualsworlds   💸 DeDust💸 TON https://dedust.io/pools/TON/MVP https://dedust.io/swap/TON/VWS"
+   },
+   "balance_lt": 54073240117410
+  },
+  {
+   "balance": "21693000000000",
+   "wallet_address": {
+    "address": "0:a1ed2bd660822e1eb37ac469fc5c73e14294345376f791435075ed8d703d6594",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:31fdc0185b4369cf458bf2709024632d41741db626c2a8ca141818935ccfe664",
+    "name": "Democratic Digital Shekels",
+    "symbol": "DILS",
+    "decimals": 6,
+    "verification": "whitelist",
+    "score": 0,
+    "description": "DILS - The New Internet Meme Currency! 💎 Ready to be part of the new internet phenomenon? Introducing $DILS, the meme token that will change the way you think about cryptocurrency! $DILS - is not just freedom, it’s a lifestyle!"
+   },
+   "balance_lt": 54073198900702
+  },
+  {
+   "balance": "8099443100000",
+   "wallet_address": {
+    "address": "0:a9176dd90d60a86a7848ea3eb3f8f0b44401160762695864a532ad116b999d53",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:421705bcb85521f9a99d466358f4dc9e0c469e0d85ddf608091ac89ca6a55c1e",
+    "name": "DHD Coin",
+    "symbol": "DHD",
+    "decimals": 9,
+    "verification": "whitelist",
+    "score": 0,
+    "description": "Low fee dick-to-dick electronic cash alternative to Toncoin"
+   },
+   "balance_lt": 54073196731404
+  },
+  {
+   "balance": "693452900000",
+   "wallet_address": {
+    "address": "0:df245ac296bdce4e8dc0079177d35836895b6e785f975f2e979063e50b70e6e9",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:76993cf91e65ffeaf0c07e26d935eb9cd43ac040f0e068ac1f2c9515b28e9e39",
+    "name": "adassm",
+    "symbol": "fsfsczcxzcsdcsdsdfsf",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "Official token of the Nikandr Surkov Youtube channel :) https://www.youtube.com/@NikandrSurkov"
+   },
+   "balance_lt": 54073151899204
+  },
+  {
+   "balance": "7231000000",
+   "wallet_address": {
+    "address": "0:73334db09f6dc84ed6585b2383e0f2cdf084acad083ec3b91f6ea2fcab32e587",
+    "is_scam": false,
+    "is_wallet": false
+   },
+   "jetton": {
+    "address": "0:bab4c22877b8dbe2fa9d898f5accc65a01f75142eca4c341240b703f6be7f25d",
+    "name": "Foton coin",
+    "symbol": "FOTON",
+    "decimals": 9,
+    "verification": "none",
+    "score": 0,
+    "description": "Fast and fun"
+   },
+   "balance_lt": 54073151176109
+  }
+ ]
+}

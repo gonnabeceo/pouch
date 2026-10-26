@@ -1,0 +1,358 @@
+{
+ "jsonrpc": "2.0",
+ "result": {
+  "context": {
+   "slot": 461474589,
+   "apiVersion": "4.3.0-beta.2"
+  },
+  "value": [
+   {
+    "pubkey": "64HvCTf55GAFnWmF7s4J5W4DB2eZizz4VsZFGiuRgS9S",
+    "account": {
+     "lamports": 2074080,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         }
+        ],
+        "isNative": false,
+        "mint": "6o2nqThoLHztTMkYHThnsWD6Qa5VrKVCpD9nkastpump",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 6,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 170
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 170
+    }
+   },
+   {
+    "pubkey": "8Dx7tWRwqUjASKjkjx4qMR5VbQQNDh2D5FacJjkWeAqC",
+    "account": {
+     "lamports": 1963230,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         },
+         {
+          "extension": "transferFeeAmount",
+          "state": {
+           "withheldAmount": 0
+          }
+         }
+        ],
+        "isNative": false,
+        "mint": "CaWZeUM4FvX9dPkjGc2xHS6tSN3qJfTWyvaG77aM5o7h",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 9,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 182
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 182
+    }
+   },
+   {
+    "pubkey": "7zCG7yKUuGmaHBkDQUT9briMYYCMYjYPd63ci8PC5Wkm",
+    "account": {
+     "lamports": 2074080,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         }
+        ],
+        "isNative": false,
+        "mint": "8gG9SV4vUdZSmg3Mss8YUzCC4NT3ZHVTa6kf31RyRbAz",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 6,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 170
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 170
+    }
+   },
+   {
+    "pubkey": "CfGWfeFVjbVU1jgxWfBsHaZAjHyydxaUF9wXipKBcu6e",
+    "account": {
+     "lamports": 2074080,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         }
+        ],
+        "isNative": false,
+        "mint": "8xJ6eZ7Vu1dsPDAobA3nNaB2yFY3iSTZP4TBzJ5KEUTv",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 6,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 170
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 170
+    }
+   },
+   {
+    "pubkey": "6S9fPsVnXymktYGvZYMMTTsUWzc6YdyuT7Ma5ZS3bbwb",
+    "account": {
+     "lamports": 2074080,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         }
+        ],
+        "isNative": false,
+        "mint": "AMiB897NveFkNvY4f3h6xrUd8javjuTSqXdZxfRUKLXs",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 6,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 170
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 170
+    }
+   },
+   {
+    "pubkey": "4NPHxv76nKeRy1QztvEVx7d2LJVssbej6pbk7RKEnrSV",
+    "account": {
+     "lamports": 2074080,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         }
+        ],
+        "isNative": false,
+        "mint": "57dYAUq7Y4hiCSdAB7iBDg4gcYFq7HeUaEs3XnNkbrrr",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 9,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 170
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 170
+    }
+   },
+   {
+    "pubkey": "AMYLa3fTCuKe9HG8FqtYNE31rPQUvyGvcaKgaLJbDfev",
+    "account": {
+     "lamports": 2074080,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         }
+        ],
+        "isNative": false,
+        "mint": "4F5fmT4VY7sexSsNBvTxc9iXeAFUUu84hG1eB9Tt1S7U",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 6,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 170
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 170
+    }
+   },
+   {
+    "pubkey": "47e1boNeiFBiK37LfS1FrTBEH8dNrwKUzXvjZuXVymiR",
+    "account": {
+     "lamports": 2074080,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         }
+        ],
+        "isNative": false,
+        "mint": "Ew8KqgSitYucieR5KnSAL2SUFspcwA8AgSuZ5xWspump",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 6,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 170
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 170
+    }
+   },
+   {
+    "pubkey": "6qE3nmvKP8G1bnidcQqK2zAtPSVPX8rQiBmpwkmAdrs4",
+    "account": {
+     "lamports": 2074080,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         }
+        ],
+        "isNative": false,
+        "mint": "52KEL7VD25R1ddVU1bBVawURzicEoRHJqJSd9kxbJadi",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 6,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 170
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 170
+    }
+   },
+   {
+    "pubkey": "EErhj8WMGT9PPTcacMGJMS95fg1MVax3JpsmMb56x9ke",
+    "account": {
+     "lamports": 2074080,
+     "data": {
+      "program": "spl-token-2022",
+      "parsed": {
+       "info": {
+        "extensions": [
+         {
+          "extension": "immutableOwner"
+         }
+        ],
+        "isNative": false,
+        "mint": "CU5e2iqWkXKrEHrg6fgoV6uqptEWL9M98oeU4skpump",
+        "owner": "qGM4kye8hT3T2123CaQKUEgJWBQEjor4P8wxYu7xqs2",
+        "state": "initialized",
+        "tokenAmount": {
+         "amount": "0",
+         "decimals": 6,
+         "uiAmount": 0.0,
+         "uiAmountString": "0"
+        }
+       },
+       "type": "account"
+      },
+      "space": 170
+     },
+     "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "rentEpoch": 18446744073709551615,
+     "space": 170
+    }
+   }
+  ]
+ },
+ "id": 1
+}

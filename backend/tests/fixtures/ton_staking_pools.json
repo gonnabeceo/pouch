@@ -1,0 +1,18 @@
+{
+ "pools": [
+  {
+   "pool": "0:a44757069a7b04e393782b4a2d3e5e449f19d16a4986a9e25436e6b97e45a16a",
+   "amount": 10050000000000,
+   "pending_deposit": 500000000000,
+   "pending_withdraw": 300000000000,
+   "ready_withdraw": 200000000000
+  },
+  {
+   "pool": "0:cf4bd44ac9e1fcf4b3b3f8e2aeb2b3d1bbfdc1e0c0a0f2b1d8a5a2c1e3f4a5b6",
+   "amount": 7000000000000,
+   "pending_deposit": 0,
+   "pending_withdraw": 0,
+   "ready_withdraw": 0
+  }
+ ]
+}

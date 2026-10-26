@@ -70,7 +70,7 @@ def test_old_data_marked_stale(setup):
 # --- снапшоты ---
 
 
-def test_snapshot_after_full_refresh_once_per_hour(setup):
+def test_snapshot_after_full_refresh_not_too_often(setup):
     c, vault, *_ = setup
     c.post("/api/refresh")
     c.post("/api/refresh")
@@ -124,13 +124,35 @@ def test_snapshot_hyperliquid_accounts(setup):
     assert all(float(a["total_usd"]) >= 0 for a in hl)
 
 
-def test_take_if_due_respects_hour(setup):
+def test_take_if_due_respects_interval(setup):
     c, vault, portfolio, _ = setup
     c.post("/api/refresh")
     now = datetime.now(UTC)
-    assert snapshots.take_if_due(portfolio, now + timedelta(minutes=59)) is None
-    assert snapshots.take_if_due(portfolio, now + timedelta(minutes=61)) is not None
+    assert snapshots.take_if_due(portfolio, now + timedelta(minutes=4)) is None
+    assert snapshots.take_if_due(portfolio, now + timedelta(minutes=6)) is not None
     assert count(vault) == 2
+
+
+def test_old_snapshots_thinned_to_hourly(setup):
+    c, vault, portfolio, _ = setup
+    c.post("/api/refresh")
+    start = datetime(2026, 1, 1, 10, 0, tzinfo=UTC)
+    with vault.db() as conn:
+        conn.execute("DELETE FROM snapshots")
+    # Три дня назад: четыре снапшота в 10-м часу и один в 11-м; плюс свежий.
+    for minutes in (0, 15, 30, 45, 60):
+        snapshots.take(portfolio, start + timedelta(minutes=minutes))
+    recent = [start + timedelta(days=3, minutes=m) for m in (0, 5, 10)]
+    for t in recent:
+        snapshots.take(portfolio, t)
+    snapshots.compact(vault, recent[-1])
+    with vault.db() as conn:
+        kept = [r["taken_at"][11:16] for r in conn.execute("SELECT taken_at FROM snapshots ORDER BY taken_at")]
+        orphans = conn.execute(
+            "SELECT count(*) FROM snapshot_items WHERE snapshot_id NOT IN (SELECT id FROM snapshots)"
+        ).fetchone()[0]
+    assert kept == ["10:45", "11:00", "10:00", "10:05", "10:10"]
+    assert orphans == 0
 
 
 # --- экспорт ---

@@ -58,15 +58,15 @@ No accounts, no cloud, no telemetry, and **never** a private key or seed phrase.
 - Account mode aware (standard / unified / portfolio margin), and every account is reconciled against Hyperliquid's own total.
 
 **History**
-- Hourly snapshots of the total, taken automatically while Pouch is open.
+- Snapshots on every full refresh while Pouch is open (at most every 5 minutes, thinned to hourly after two days).
 - "Current holdings" mode: replays today's holdings against historical prices, so you get a 90-day chart from day one.
-- Charts per portfolio and per asset, high/low/change tiles, ranges from 24h to all-time, and a table view for every chart.
+- Charts per portfolio and per asset, high/low/change tiles, ranges from 1h to all-time, and a table view for every chart.
 
 **Comfort**
 - English and Russian UI, switchable on the fly.
 - Light and dark themes with a circular reveal animation (respects `prefers-reduced-motion`).
 - **Streamer mode** (`Shift+H`): masks every amount, shortens addresses and hides notes — safe for screen sharing.
-- Auto-refresh (every 5 minutes by default, configurable). If a provider fails, the last known value is shown and marked as stale.
+- Auto-refresh (every 5 minutes by default, configurable) that respects your API quotas: opening the page or keeping several tabs open never refreshes more often than the interval. If a provider fails, the last known value is shown and marked as stale.
 - Responsive layout that works on a phone.
 
 **Your data stays yours**
@@ -203,7 +203,7 @@ pouch/
 │   │   ├── chains/          # one adapter per network
 │   │   ├── prices.py        # CoinGecko prices and coin directory
 │   │   ├── portfolio.py     # refresh, totals, portfolios, dust and spam
-│   │   ├── snapshots.py     # hourly snapshots, CSV/JSON, backups
+│   │   ├── snapshots.py     # snapshots, CSV/JSON, backups
 │   │   ├── history.py       # simulated history from historical prices
 │   │   └── api/             # HTTP routes
 │   └── tests/               # pytest + recorded API fixtures

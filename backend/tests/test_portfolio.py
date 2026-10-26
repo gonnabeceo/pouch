@@ -1,3 +1,5 @@
+from datetime import UTC, datetime, timedelta
+
 import httpx
 import pytest
 from fastapi.testclient import TestClient
@@ -19,6 +21,7 @@ def client(tmp_path, fake_api):
     with TestClient(app) as c:
         assert c.post("/api/setup", json={"password": PASSWORD}).status_code == 204
         c.fake_api = fake_api
+        c.vault = vault
         yield c
 
 
@@ -127,6 +130,51 @@ def test_directory_cached_between_refreshes(client):
     client.post("/api/refresh")
     client.post("/api/refresh")
     assert sum("coins/list" in c for c in client.fake_api.calls) == 1
+
+
+def _set_last_attempt(client_db, minutes_ago: int) -> None:
+    old = (datetime.now(UTC) - timedelta(minutes=minutes_ago)).isoformat(timespec="seconds")
+    with client_db() as conn:
+        conn.execute("UPDATE wallet_state SET fetched_at = ?", (old,))
+        conn.execute("UPDATE cache SET value = json_set(value, '$.at', ?) WHERE key = 'prices'", (old,))
+
+
+def test_only_due_skips_fresh_wallets(client):
+    btc = add(client, "BTC", "btc", BTC)
+    client.post("/api/refresh")
+    calls = len(client.fake_api.calls)
+    # Открытие страницы и автообновление сразу после обновления: к провайдерам не идём.
+    view = client.post("/api/refresh?only_due=true").json()
+    assert len(client.fake_api.calls) == calls
+    assert wallet(view, btc)["status"] == "fresh"
+    # Новый кошелёк ещё не опрашивался — обновляется только он и цены.
+    ton = add(client, "TON", "ton", TON)
+    view = client.post("/api/refresh?only_due=true").json()
+    new_calls = client.fake_api.calls[calls:]
+    assert not any("mempool.space" in c for c in new_calls)
+    assert any("tonapi.io" in c for c in new_calls) and any("simple/price" in c for c in new_calls)
+    assert wallet(view, ton)["status"] == "fresh"
+
+
+def test_only_due_refreshes_after_interval(client):
+    add(client, "BTC", "btc", BTC)
+    client.post("/api/refresh")
+    _set_last_attempt(client.vault.db, minutes_ago=6)  # интервал по умолчанию — 5 минут
+    calls = len(client.fake_api.calls)
+    client.post("/api/refresh?only_due=true")
+    assert any("mempool.space" in c for c in client.fake_api.calls[calls:])
+
+
+def test_only_due_does_not_retry_failed_source_every_time(client):
+    add(client, "BTC", "btc", BTC)
+    client.fake_api.failing.add("mempool.space")
+    client.post("/api/refresh")
+    calls = len(client.fake_api.calls)
+    client.post("/api/refresh?only_due=true")
+    assert not any("mempool.space" in c for c in client.fake_api.calls[calls:])
+    # Кнопка «Обновить» пробует снова.
+    client.post("/api/refresh")
+    assert any("mempool.space" in c for c in client.fake_api.calls[calls:])
 
 
 def test_portfolio_requires_session(client):

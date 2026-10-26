@@ -27,6 +27,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 type WalletSort = { by: "value" | "added"; desc: boolean }
 const SORT_KEY = "pouch.walletSort"
 const DEFAULT_SORT: WalletSort = { by: "value", desc: true }
+const AUTO_CHECK_MS = 60_000
 
 function readSort(): WalletSort {
   try {
@@ -112,9 +113,13 @@ export default function Home() {
     saveSelected(id)
   }
 
-  const load = useCallback(async (mode: "cached" | "refresh" | "background") => {
+  // open — открытие страницы, auto — автообновление: обновляются только кошельки, которым пора.
+  const load = useCallback(async (mode: "cached" | "refresh" | "open" | "auto") => {
     const seq = ++seqRef.current
-    const get = (pid: number | null) => (mode === "cached" ? api.portfolio(pid) : api.refresh(pid, mode === "background"))
+    const get = (pid: number | null) =>
+      mode === "cached"
+        ? api.portfolio(pid)
+        : api.refresh(pid, { onlyDue: mode !== "refresh", background: mode === "auto" })
     let result: PortfolioView
     try {
       result = await get(selectedRef.current)
@@ -136,16 +141,18 @@ export default function Home() {
 
   const refreshingRef = useRef(false)
   const refresh = useCallback(
-    async (background = false) => {
+    async (mode: "refresh" | "open" | "auto" = "refresh") => {
       if (refreshingRef.current) return
       refreshingRef.current = true
-      setRefreshing(true)
+      // Когда обновлять нечего, сервер отвечает сразу: спиннер показываем, только если запрос затянулся.
+      const spinner = setTimeout(() => setRefreshing(true), 300)
       try {
-        await load(background ? "background" : "refresh")
+        await load(mode)
       } catch (e) {
         // Ошибка фонового обновления видна по статусам кошельков, тост не нужен.
-        if (!background) toast.error((e as Error).message)
+        if (mode !== "auto") toast.error((e as Error).message)
       } finally {
+        clearTimeout(spinner)
         refreshingRef.current = false
         setRefreshing(false)
       }
@@ -153,27 +160,18 @@ export default function Home() {
     [load],
   )
 
-  // Автообновление, пока приложение открыто. Интервал — из настроек.
+  // Автообновление: раз в минуту спрашиваем сервер, а он сам решает по интервалу из настроек,
+  // каким кошелькам пора. Так интервал соблюдается при любом числе вкладок и заходов на страницу.
   useEffect(() => {
-    let cancelled = false
-    let timer: ReturnType<typeof setInterval> | undefined
-    api
-      .general()
-      .then((s) => {
-        if (!cancelled) timer = setInterval(() => refresh(true), s.refresh_interval_minutes * 60_000)
-      })
-      .catch(() => {})
-    return () => {
-      cancelled = true
-      clearInterval(timer)
-    }
+    const timer = setInterval(() => refresh("auto"), AUTO_CHECK_MS)
+    return () => clearInterval(timer)
   }, [refresh])
 
-  // Сразу показываем последнее известное из базы, затем обновляем из сетей.
+  // Сразу показываем последнее известное из базы, затем обновляем то, что устарело.
   useEffect(() => {
     api.portfolios().then(setPortfolios).catch(() => {})
     load("cached").catch(() => {})
-    refresh()
+    refresh("open")
   }, [load, refresh])
 
   const choose = (id: number | null) => {

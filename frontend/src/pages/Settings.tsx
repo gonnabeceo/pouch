@@ -358,7 +358,7 @@ function Export() {
       <div>
         <h2 className="text-sm font-medium">{t("Экспорт и бэкап")}</h2>
         <p className="text-sm text-muted-foreground">
-          {t("Снапшоты сохраняются после полного успешного обновления, не чаще раза в час.")}{" "}
+          {t("Снапшоты сохраняются после полного успешного обновления, не чаще раза в 5 минут; старше двух суток остаётся один в час.")}{" "}
           {summary &&
             (summary.count
               ? t("Сейчас {n}, последний — {time}.", { n: summary.count, time: formatWhen(summary.last!) })

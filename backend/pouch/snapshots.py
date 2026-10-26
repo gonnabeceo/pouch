@@ -1,8 +1,9 @@
 """Снапшоты состояния и экспорт.
 
-После каждого полного успешного обновления, но не чаще раза в час, сохраняется снапшот:
-по каждому кошельку и токену — количество, цена и стоимость, account value Hyperliquid,
-курс USD/RUB и итоги по каждому портфолио. Графики появятся позже, данные копятся сейчас.
+После каждого полного успешного обновления, но не чаще раза в SNAPSHOT_EVERY, сохраняется
+снапшот: по каждому кошельку и токену — количество, цена и стоимость, account value Hyperliquid,
+курс USD/RUB и итоги по каждому портфолио. Частые снапшоты нужны коротким графикам (1 ч, 24 ч);
+старше DENSE_FOR они прореживаются до одного в час, чтобы база не росла.
 """
 
 import csv
@@ -11,7 +12,8 @@ import json
 import zipfile
 from datetime import UTC, datetime, timedelta
 
-SNAPSHOT_EVERY = timedelta(hours=1)
+SNAPSHOT_EVERY = timedelta(minutes=5)
+DENSE_FOR = timedelta(hours=48)
 CSV_COLUMNS = [
     "taken_at", "wallet_id", "wallet_name", "network", "symbol", "kind", "protocol", "chain",
     "amount", "price_usd", "value_usd", "usd_rub",
@@ -28,7 +30,20 @@ def take_if_due(portfolio, now: datetime | None = None) -> int | None:
         last = conn.execute("SELECT taken_at FROM snapshots ORDER BY taken_at DESC LIMIT 1").fetchone()
     if last and datetime.fromisoformat(last["taken_at"]) > now - SNAPSHOT_EVERY:
         return None
-    return take(portfolio, now)
+    snapshot_id = take(portfolio, now)
+    compact(portfolio.vault, now)
+    return snapshot_id
+
+
+def compact(vault, now: datetime) -> None:
+    """Старше DENSE_FOR оставляет последний снапшот каждого часа; связанные строки удаляются каскадом."""
+    border = (now - DENSE_FOR).isoformat(timespec="seconds")
+    with vault.db() as conn:
+        conn.execute(
+            "DELETE FROM snapshots WHERE taken_at < ? AND id NOT IN ("
+            " SELECT max(id) FROM snapshots WHERE taken_at < ? GROUP BY substr(taken_at, 1, 13))",
+            (border, border),
+        )
 
 
 def take(portfolio, now: datetime) -> int:

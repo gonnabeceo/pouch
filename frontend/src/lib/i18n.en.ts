@@ -201,8 +201,8 @@ export const EN: Record<string, string> = {
   "Интервал в минутах": "Interval in minutes",
   "мин": "min",
   "Экспорт и бэкап": "Export and backup",
-  "Снапшоты сохраняются после полного успешного обновления, не чаще раза в час.":
-    "Snapshots are saved after a fully successful refresh, at most once an hour.",
+  "Снапшоты сохраняются после полного успешного обновления, не чаще раза в 5 минут; старше двух суток остаётся один в час.":
+    "Snapshots are saved after a fully successful refresh, at most every 5 minutes; after two days, one per hour is kept.",
   "Сейчас {n}, последний — {time}.": "{n} so far, latest {time}.",
   "Пока ни одного.": "None yet.",
   "CSV и JSON — открытые данные, бэкап — зашифрованная база, без пароля не читается.":
@@ -216,6 +216,7 @@ export const EN: Record<string, string> = {
   "Проверьте заполнение полей": "Please check the form fields",
 
   // история
+  "1 ч": "1h",
   "24 ч": "24h",
   "7 д": "7d",
   "30 д": "30d",
@@ -235,8 +236,8 @@ export const EN: Record<string, string> = {
   "; по текущей цене без истории: {list}": "; held at the current price (no history): {list}",
   "Догружаю историю цен из CoinGecko: {list}. Без ключа CoinGecko это может занять пару минут, график дорисуется сам.":
     "Loading price history from CoinGecko: {list}. Without a CoinGecko key this can take a couple of minutes; the chart fills in by itself.",
-  "Реальные снапшоты: раз в час, пока Pouch открыт и обновление прошло полностью. Считаются по текущему составу портфолио, так что скрытые кошельки не искажают изменение.":
-    "Real snapshots: once an hour while Pouch is open and a refresh fully succeeds. Computed for the current portfolio composition, so hidden wallets don't skew the change.",
+  "Реальные снапшоты: при каждом полном успешном обновлении, пока Pouch открыт (не чаще раза в 5 минут; старше двух суток остаётся один в час). Считаются по текущему составу портфолио, так что скрытые кошельки не искажают изменение.":
+    "Real snapshots: on every fully successful refresh while Pouch is open (at most every 5 minutes; after two days, one per hour is kept). Computed for the current portfolio composition, so hidden wallets don't skew the change.",
   "Первый снапшот — {date}.": "First snapshot: {date}.",
   "{list} и ещё {n}": "{list} and {n} more",
   "Изменение": "Change",
@@ -244,10 +245,10 @@ export const EN: Record<string, string> = {
   "без изменений": "no change",
   "рост": "up",
   "снижение": "down",
-  "За этот период пока одна точка. Снапшоты сохраняются раз в час, пока Pouch открыт.":
-    "Only one point in this period so far. Snapshots are saved hourly while Pouch is open.",
-  "Снапшотов пока нет. Первый появится после полного успешного обновления, дальше — раз в час, пока Pouch открыт.":
-    "No snapshots yet. The first one appears after a fully successful refresh, then hourly while Pouch is open.",
+  "За этот период пока одна точка. Снапшоты сохраняются при каждом полном обновлении, пока Pouch открыт.":
+    "Only one point in this period so far. Snapshots are saved on every full refresh while Pouch is open.",
+  "Снапшотов пока нет. Первый появится после полного успешного обновления, дальше — при каждом обновлении, пока Pouch открыт.":
+    "No snapshots yet. The first one appears after a fully successful refresh, then on every refresh while Pouch is open.",
   "Показать текущий состав по историческим ценам": "Show current holdings at historical prices",
   "Итог": "Total",
   "Структура по активам": "Assets over time",

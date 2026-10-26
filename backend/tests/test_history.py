@@ -1,6 +1,7 @@
 """История для графиков: реальная по снапшотам и моделирование по историческим ценам."""
 
 from datetime import UTC, datetime, timedelta
+from decimal import Decimal
 
 import httpx
 import pytest
@@ -134,3 +135,35 @@ def test_simulated_waits_out_rate_limit(c, monkeypatch):
     monkeypatch.setattr(c.fake_api.__class__, "__call__", flaky)
     _, h = simulate(c)
     assert set(h["assets_with_history"]) == {"BTC", "LTC"} and hits["n"] == 2
+
+
+def test_snapshot_history_last_hour(c):
+    snapshot_at(c, 40000, timedelta(hours=3))
+    snapshot_at(c, 50000, timedelta(minutes=40))
+    snapshot_at(c, 60000, timedelta(minutes=10))
+    h = c.get("/api/history", params={"hours": 1}).json()
+    real = [p for p in h["points"] if not p.get("live")]
+    assert len(real) == 2
+    assert real[0]["total_usd"] == pytest.approx(BTC_AMOUNT * 50000 + LTC_AMOUNT * conftest.PRICES["litecoin"])
+    assert c.get("/api/history", params={"hours": 25}).status_code == 422
+
+
+def test_simulated_last_hour_from_daily_series(c, monkeypatch):
+    now_ms = datetime.now(UTC).timestamp() * 1000
+    asked = []
+
+    async def recent(http, key, coin_id, days):
+        asked.append(days)
+        price = conftest.PRICES[coin_id]
+        # Как у CoinGecko за сутки: точки каждые 5 минут; берём три — до часа и внутри него.
+        return [(int(now_ms - m * 60_000), Decimal(str(price * f))) for m, f in ((90, 0.5), (50, 0.8), (20, 0.9))]
+
+    monkeypatch.setattr(c.portfolio.coingecko, "price_history", recent)
+    c.get("/api/history/simulated", params={"hours": 1})
+    c.portal.call(history.wait_jobs, c.portfolio)
+    h = c.get("/api/history/simulated", params={"hours": 1}).json()
+    assert set(asked) == {1}  # час вырезается из дневного ряда
+    ltc = LTC_AMOUNT * conftest.PRICES["litecoin"]
+    real = [p["total_usd"] for p in h["points"] if not p.get("live")]
+    assert real == [pytest.approx((BTC_AMOUNT * 80000 + ltc) * f) for f in (0.8, 0.9)]
+    assert h["hours"] == 1

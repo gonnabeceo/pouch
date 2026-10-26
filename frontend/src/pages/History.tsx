@@ -18,24 +18,29 @@ import { Button } from "@/components/ui/button"
 type Mode = "snapshots" | "simulated"
 type Currency = "usd" | "rub"
 
+// Период в часах; 0 — вся история.
 const RANGES: [number, string][] = [
-  [1, "24 ч"],
-  [7, "7 д"],
-  [30, "30 д"],
-  [90, "90 д"],
+  [1, "1 ч"],
+  [24, "24 ч"],
+  [24 * 7, "7 д"],
+  [24 * 30, "30 д"],
+  [24 * 90, "90 д"],
   [0, "Всё"],
 ]
 const SERIES = ["var(--series-1)", "var(--series-2)", "var(--series-3)", "var(--series-4)", "var(--series-5)"]
 const OTHER = "Прочее"
 const PREFS_KEY = "pouch.history"
 
-type Prefs = { days: number; mode: Mode; currency: Currency }
+type Prefs = { hours: number; mode: Mode; currency: Currency }
 
 function readPrefs(): Prefs {
+  const defaults: Prefs = { hours: 24 * 30, mode: "snapshots", currency: "usd" }
   try {
-    return { days: 30, mode: "snapshots", currency: "usd", ...JSON.parse(localStorage.getItem(PREFS_KEY) ?? "{}") }
+    const { days, ...stored } = JSON.parse(localStorage.getItem(PREFS_KEY) ?? "{}")
+    // Раньше период хранился в днях.
+    return { ...defaults, ...(typeof days === "number" ? { hours: days * 24 } : {}), ...stored }
   } catch {
-    return { days: 30, mode: "snapshots", currency: "usd" }
+    return defaults
   }
 }
 
@@ -55,7 +60,7 @@ const dateTime = { format: (d: Date) => new Intl.DateTimeFormat(locale(), { day:
 const dayMonth = { format: (d: Date) => new Intl.DateTimeFormat(locale(), { day: "numeric", month: "short" }).format(d) }
 const hourMinute = { format: (d: Date) => new Intl.DateTimeFormat(locale(), { hour: "2-digit", minute: "2-digit" }).format(d) }
 
-const tickTime = (days: number) => (ts: number) => (days === 1 ? hourMinute : dayMonth).format(new Date(ts))
+const tickTime = (hours: number) => (ts: number) => (hours && hours <= 24 ? hourMinute : dayMonth).format(new Date(ts))
 
 // --- страница ---
 
@@ -91,11 +96,11 @@ export default function History() {
     setLoading(true)
     setError(null)
     const requests: Promise<unknown>[] = [
-      api.history(selected, prefs.days).then((h) => !cancelled && setReal(h)),
+      api.history(selected, prefs.hours).then((h) => !cancelled && setReal(h)),
     ]
     if (prefs.mode === "simulated") {
       requests.push(
-        api.simulatedHistory(selected, prefs.days).then((h) => {
+        api.simulatedHistory(selected, prefs.hours).then((h) => {
           if (!cancelled) setSimulated(h)
           return h
         }),
@@ -106,7 +111,7 @@ export default function History() {
     const pollSimulated = () => {
       poll = setTimeout(() => {
         api
-          .simulatedHistory(selected, prefs.days)
+          .simulatedHistory(selected, prefs.hours)
           .then((h) => {
             if (cancelled) return
             setSimulated(h)
@@ -134,7 +139,7 @@ export default function History() {
       cancelled = true
       clearTimeout(poll)
     }
-  }, [selected, prefs.days, prefs.mode])
+  }, [selected, prefs.hours, prefs.mode])
 
   const choose = (id: number | null) => {
     saveSelected(id)
@@ -176,8 +181,8 @@ export default function History() {
             />
           )}
           <Segmented
-            value={String(prefs.days)}
-            onChange={(v) => update({ days: Number(v) })}
+            value={String(prefs.hours)}
+            onChange={(v) => update({ hours: Number(v) })}
             options={RANGES.map(([d, label]) => [String(d), t(label)] as [string, string])}
           />
           <Segmented
@@ -204,7 +209,7 @@ export default function History() {
       <div className={cn("space-y-8 transition-opacity sm:space-y-10", loading && "opacity-60")}>
         <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <StatTile label={t("Сейчас")} value={last !== null ? money(last, currency) : "—"} />
-          <ChangeTile first={first} last={last} currency={currency} days={prefs.days} />
+          <ChangeTile first={first} last={last} currency={currency} hours={prefs.hours} />
           <StatTile label={t("Максимум")} value={enough ? money(Math.max(...values), currency) : "—"} />
           <StatTile label={t("Минимум")} value={enough ? money(Math.min(...values), currency) : "—"} />
         </section>
@@ -214,7 +219,7 @@ export default function History() {
             {prefs.mode === "simulated" ? t("Текущий состав по историческим ценам") : t("Итог по снапшотам")}
           </h2>
           {enough ? (
-            <TotalChart data={series} currency={currency} days={prefs.days} streamer={streamer} />
+            <TotalChart data={series} currency={currency} hours={prefs.hours} streamer={streamer} />
           ) : (
             <EmptyHistory
               real={real}
@@ -225,7 +230,7 @@ export default function History() {
         </section>
 
         {real && real.assets.rows.length >= 2 && (
-          <AssetsSection real={real} currency={currency} days={prefs.days} streamer={streamer} toCurrency={toCurrency} />
+          <AssetsSection real={real} currency={currency} hours={prefs.hours} streamer={streamer} toCurrency={toCurrency} />
         )}
 
         {real && real.allocation.length > 0 && (
@@ -291,7 +296,7 @@ function ModeNote({ mode, real, simulated, loading }: {
   if (!real) return null
   return (
     <p className="text-sm text-muted-foreground">
-      {t("Реальные снапшоты: раз в час, пока Pouch открыт и обновление прошло полностью. Считаются по текущему составу портфолио, так что скрытые кошельки не искажают изменение.")}
+      {t("Реальные снапшоты: при каждом полном успешном обновлении, пока Pouch открыт (не чаще раза в 5 минут; старше двух суток остаётся один в час). Считаются по текущему составу портфолио, так что скрытые кошельки не искажают изменение.")}
       {real.first_snapshot_at && " " + t("Первый снапшот — {date}.", { date: dateTime.format(new Date(real.first_snapshot_at)) })}
     </p>
   )
@@ -315,9 +320,9 @@ function StatTile({ label, value, children }: { label: string; value: string; ch
   )
 }
 
-function ChangeTile({ first, last, currency, days }: { first: number | null; last: number | null; currency: Currency; days: number }) {
+function ChangeTile({ first, last, currency, hours }: { first: number | null; last: number | null; currency: Currency; hours: number }) {
   const { on } = useStreamer()
-  const period = RANGES.find(([d]) => d === days)?.[1] ?? ""
+  const period = RANGES.find(([h]) => h === hours)?.[1] ?? ""
   if (first === null || last === null) return <StatTile label={t("Изменение")} value="—" />
   const diff = last - first
   const pct = first ? (diff / Math.abs(first)) * 100 : 0
@@ -326,7 +331,7 @@ function ChangeTile({ first, last, currency, days }: { first: number | null; las
   const Icon = flat ? MinusIcon : up ? ArrowUpRightIcon : ArrowDownRightIcon
   return (
     <div className="min-w-0 space-y-1 rounded-xl border px-3 py-3 sm:px-4">
-      <p className="text-xs text-muted-foreground">{t("Изменение")} · {days ? t(period) : t("всё время")}</p>
+      <p className="text-xs text-muted-foreground">{t("Изменение")} · {hours ? t(period) : t("всё время")}</p>
       <p
         className="flex items-center gap-1 text-base font-semibold tracking-tight sm:text-lg"
         style={{ color: flat ? undefined : up ? "var(--delta-up)" : "var(--delta-down)" }}
@@ -351,8 +356,8 @@ function EmptyHistory({ real, loading, onSimulate }: { real: SnapshotHistory | n
     <div className="flex h-72 flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-6 text-center">
       <p className="max-w-md text-sm text-muted-foreground">
         {real?.snapshot_count
-          ? t("За этот период пока одна точка. Снапшоты сохраняются раз в час, пока Pouch открыт.")
-          : t("Снапшотов пока нет. Первый появится после полного успешного обновления, дальше — раз в час, пока Pouch открыт.")}
+          ? t("За этот период пока одна точка. Снапшоты сохраняются при каждом полном обновлении, пока Pouch открыт.")
+          : t("Снапшотов пока нет. Первый появится после полного успешного обновления, дальше — при каждом обновлении, пока Pouch открыт.")}
       </p>
       {onSimulate && (
         <Button variant="outline" size="sm" onClick={onSimulate}>
@@ -367,10 +372,10 @@ function EmptyHistory({ real, loading, onSimulate }: { real: SnapshotHistory | n
 
 const axisTick = { fill: "var(--chart-ink-muted)", fontSize: 11 }
 
-function TotalChart({ data, currency, days, streamer }: {
+function TotalChart({ data, currency, hours, streamer }: {
   data: { ts: number; value: number; live: boolean }[]
   currency: Currency
-  days: number
+  hours: number
   streamer: boolean
 }) {
   const lastIndex = data.length - 1
@@ -383,7 +388,7 @@ function TotalChart({ data, currency, days, streamer }: {
           type="number"
           scale="time"
           domain={["dataMin", "dataMax"]}
-          tickFormatter={tickTime(days || 365)}
+          tickFormatter={tickTime(hours)}
           tick={axisTick}
           tickLine={false}
           axisLine={{ stroke: "var(--chart-axis)" }}
@@ -477,7 +482,7 @@ function colorFor(top: string[], key: string) {
   return i >= 0 ? SERIES[i] : "var(--series-other)"
 }
 
-function AssetsSection({ real, currency, days, streamer, toCurrency }: SectionProps & { days: number }) {
+function AssetsSection({ real, currency, hours, streamer, toCurrency }: SectionProps & { hours: number }) {
   const keys = [...real.assets.top, OTHER]
   const rate = new Map(real.points.map((p) => [p.t, p.usd_rub]))
   const rows = real.assets.rows.map((r) => ({
@@ -496,7 +501,7 @@ function AssetsSection({ real, currency, days, streamer, toCurrency }: SectionPr
           <CartesianGrid vertical={false} stroke="var(--chart-grid)" />
           <XAxis
             dataKey="ts"
-            tickFormatter={tickTime(days || 365)}
+            tickFormatter={tickTime(hours)}
             tick={axisTick}
             tickLine={false}
             axisLine={{ stroke: "var(--chart-axis)" }}

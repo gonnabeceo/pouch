@@ -213,6 +213,9 @@ async function download(path: string, body: unknown): Promise<string> {
   return name
 }
 
+// Период графиков в часах: 0 — вся история, меньше суток уходит как hours, остальное — как days.
+const periodQuery = (hours: number) => (hours && hours < 24 ? `hours=${hours}` : `days=${hours / 24}`)
+
 export const api = {
   status: () => request<Status>("GET", "/status"),
   setup: (password: string) => request<void>("POST", "/setup", { password }),
@@ -227,14 +230,15 @@ export const api = {
     request<Wallet>("PATCH", `/wallets/${id}`, patch),
   deleteWallet: (id: number) => request<void>("DELETE", `/wallets/${id}`),
   portfolio: (id: number | null) => request<PortfolioView>("GET", `/portfolio${id ? `?portfolio_id=${id}` : ""}`),
+  // onlyDue: опросить только кошельки старше интервала обновления (открытие страницы, автообновление).
   // background: автообновление не продлевает сессию, иначе автоблокировка не сработает.
-  refresh: (id: number | null, background = false) =>
-    request<PortfolioView>("POST", `/refresh${id ? `?portfolio_id=${id}` : ""}`, undefined,
+  refresh: (id: number | null, { onlyDue = false, background = false } = {}) =>
+    request<PortfolioView>("POST", `/refresh?only_due=${onlyDue}${id ? `&portfolio_id=${id}` : ""}`, undefined,
       background ? { "X-Pouch-Background": "1" } : undefined),
-  history: (id: number | null, days: number) =>
-    request<SnapshotHistory>("GET", `/history?days=${days}${id ? `&portfolio_id=${id}` : ""}`),
-  simulatedHistory: (id: number | null, days: number) =>
-    request<SimulatedHistory>("GET", `/history/simulated?days=${days}${id ? `&portfolio_id=${id}` : ""}`),
+  history: (id: number | null, hours: number) =>
+    request<SnapshotHistory>("GET", `/history?${periodQuery(hours)}${id ? `&portfolio_id=${id}` : ""}`),
+  simulatedHistory: (id: number | null, hours: number) =>
+    request<SimulatedHistory>("GET", `/history/simulated?${periodQuery(hours)}${id ? `&portfolio_id=${id}` : ""}`),
   snapshotSummary: () => request<SnapshotSummary>("GET", "/snapshots/summary"),
   exportSnapshots: (password: string, format: "csv" | "json") =>
     download("/export/snapshots", { password, format }),

@@ -41,10 +41,18 @@ def _thin(points: list, limit: int = MAX_POINTS) -> list:
 # --- реальная история по снапшотам ---
 
 
-def snapshot_history(portfolio, portfolio_id: int | None, days: int) -> dict:
+def _period(days: int, hours: int | None) -> timedelta | None:
+    """hours задаёт короткие периоды (1 ч) и важнее days; None — вся история."""
+    if hours:
+        return timedelta(hours=hours)
+    return timedelta(days=days) if days else None
+
+
+def snapshot_history(portfolio, portfolio_id: int | None, days: int, hours: int | None = None) -> dict:
     view = portfolio.view(portfolio_id)
     current = {w["id"]: w for w in view["wallets"]}
-    since = _iso(datetime.now(UTC) - timedelta(days=days)) if days else ""
+    period = _period(days, hours)
+    since = _iso(datetime.now(UTC) - period) if period else ""
 
     with portfolio.vault.db() as conn:
         snaps = conn.execute(
@@ -65,12 +73,14 @@ def snapshot_history(portfolio, portfolio_id: int | None, days: int) -> dict:
         by_asset[i["snapshot_id"]][i["symbol"]] += value
         by_wallet[i["snapshot_id"]][i["wallet_id"]] += value
 
-    # Длинные периоды — одна точка в день (последний снапшот дня), короткие — все.
-    if days == 0 or days > 7:
-        last_of_day = {}
+    # Последние двое суток снапшоты частые, дальше — раз в час. Чтобы плотность точек не скакала,
+    # до 2 суток берём все, до недели — последний снапшот часа, дальше — последний снапшот дня.
+    if period is None or period > timedelta(days=2):
+        bucket = 13 if period and period <= timedelta(days=7) else 10  # «YYYY-MM-DDTHH» или «YYYY-MM-DD»
+        last_in_bucket = {}
         for s in snaps:
-            last_of_day[s["taken_at"][:10]] = s
-        snaps = list(last_of_day.values())
+            last_in_bucket[s["taken_at"][:bucket]] = s
+        snaps = list(last_in_bucket.values())
 
     points = [
         {"t": s["taken_at"], "total_usd": float(sum(by_wallet[s["id"]].values(), Decimal(0))),
@@ -129,7 +139,8 @@ def _chart(portfolio, coin_id: str, days: int) -> tuple[list[tuple[int, Decimal]
     cached, updated_at = portfolio._cache_get(f"cg.chart:{coin_id}:{days}")
     if not cached:
         return None, False
-    ttl = timedelta(hours=1) if days <= 7 else timedelta(hours=6)
+    # Дневной ряд (5-минутные точки) питает графики за 1 ч и 24 ч: час-давности для них слишком много.
+    ttl = timedelta(minutes=5) if days <= 1 else timedelta(hours=1) if days <= 7 else timedelta(hours=6)
     fresh = bool(updated_at) and datetime.fromisoformat(updated_at) > datetime.now(UTC) - ttl
     return [(t, Decimal(p)) for t, p in cached["prices"]], fresh
 
@@ -196,9 +207,10 @@ async def wait_jobs(portfolio) -> None:
         await job
 
 
-async def simulated_history(portfolio, portfolio_id: int | None, days: int) -> dict:
+async def simulated_history(portfolio, portfolio_id: int | None, days: int, hours: int | None = None) -> dict:
     view = portfolio.view(portfolio_id)
-    days = min(max(days or 365, 1), 365)
+    # Периоды короче суток вырезаются из дневного ряда CoinGecko: у него точки каждые 5 минут.
+    days = 1 if hours else min(max(days or 365, 1), 365)
     if not hasattr(portfolio, "history_queue"):
         portfolio.history_queue = set()
 
@@ -249,6 +261,9 @@ async def simulated_history(portfolio, portfolio_id: int | None, days: int) -> d
         series = {a["symbol"]: ([t for t, _ in histories[a["symbol"]]], [p for _, p in histories[a["symbol"]]])
                   for a in with_history}
         amounts = {a["symbol"]: Decimal(a["amount"]) for a in with_history}
+        if hours:
+            since_ms = (datetime.now(UTC) - timedelta(hours=hours)).timestamp() * 1000
+            grid = [t for t in grid if t >= since_ms]
         for t in grid:
             total = constant
             for sym, (times, prices) in series.items():
@@ -260,6 +275,7 @@ async def simulated_history(portfolio, portfolio_id: int | None, days: int) -> d
     return {
         "portfolio": view["portfolio"],
         "days": days,
+        "hours": hours,
         "points": _thin(points),
         "coverage_pct": float(covered / total_abs * 100) if total_abs else 0.0,
         "assets_with_history": [a["symbol"] for a in with_history],

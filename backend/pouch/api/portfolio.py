@@ -27,9 +27,9 @@ def portfolio(portfolio_id: int | None = None, p: Portfolio = Depends(get_portfo
 
 
 @router.post("/refresh")
-async def refresh(portfolio_id: int | None = None, p: Portfolio = Depends(get_portfolio)):
+async def refresh(portfolio_id: int | None = None, only_due: bool = False, p: Portfolio = Depends(get_portfolio)):
     try:
-        return await p.refresh(portfolio_id)
+        return await p.refresh(portfolio_id, only_due)
     except PortfolioNotFound:
         raise HTTPException(404, NOT_FOUND) from None
 
@@ -110,20 +110,22 @@ def update_general(body: SettingsIn, p: Portfolio = Depends(get_portfolio)):
 
 
 HistoryDays = Query(default=30, ge=0, le=365, description="0 — вся история")
+HistoryHours = Query(default=None, ge=1, le=24, description="Период короче суток; важнее days")
 
 
 @router.get("/history")
-def snapshot_history(portfolio_id: int | None = None, days: int = HistoryDays, p: Portfolio = Depends(get_portfolio)):
+def snapshot_history(portfolio_id: int | None = None, days: int = HistoryDays, hours: int | None = HistoryHours,
+                     p: Portfolio = Depends(get_portfolio)):
     try:
-        return history.snapshot_history(p, portfolio_id, days)
+        return history.snapshot_history(p, portfolio_id, days, hours)
     except PortfolioNotFound:
         raise HTTPException(404, NOT_FOUND) from None
 
 
 @router.get("/history/simulated")
 async def simulated_history(portfolio_id: int | None = None, days: int = HistoryDays,
-                            p: Portfolio = Depends(get_portfolio)):
+                            hours: int | None = HistoryHours, p: Portfolio = Depends(get_portfolio)):
     try:
-        return await history.simulated_history(p, portfolio_id, days)
+        return await history.simulated_history(p, portfolio_id, days, hours)
     except PortfolioNotFound:
         raise HTTPException(404, NOT_FOUND) from None

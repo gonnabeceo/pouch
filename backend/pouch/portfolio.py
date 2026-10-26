@@ -27,6 +27,9 @@ DEFAULT_DUST_USD = 1.0
 DEFAULT_REFRESH_MINUTES = 5
 SETTINGS = {"dust_threshold_usd": DEFAULT_DUST_USD, "refresh_interval_minutes": DEFAULT_REFRESH_MINUTES}
 STALE_AFTER_INTERVALS = 3  # данные старше трёх интервалов обновления считаются устаревшими
+# Автообновление опрашивает сервер чаще интервала: кошелёк становится «пора обновить» чуть раньше срока,
+# чтобы опрос раз в минуту не откладывал обновление на лишнюю минуту.
+DUE_SLACK = timedelta(seconds=30)
 ALL_WALLETS = "Все кошельки"
 
 
@@ -42,6 +45,11 @@ DIRECTORY_MAX_AGE = timedelta(days=1)
 
 def _now() -> str:
     return datetime.now(UTC).isoformat(timespec="seconds")
+
+
+def _last_attempt(wallet) -> datetime | None:
+    times = [t for t in (wallet["fetched_at"], wallet["error_at"]) if t]
+    return datetime.fromisoformat(max(times)) if times else None
 
 
 class Portfolio:
@@ -98,11 +106,16 @@ class Portfolio:
 
     # --- обновление ---
 
-    async def refresh(self, portfolio_id: int | None = None) -> dict:
-        # Обновляются все нескрытые кошельки: выбранное портфолио влияет только на представление.
-        # Параллельные нажатия «Обновить» ждут уже идущее обновление.
+    async def refresh(self, portfolio_id: int | None = None, only_due: bool = False) -> dict:
+        """Обновляет все нескрытые кошельки: выбранное портфолио влияет только на представление.
+
+        only_due — открытие страницы и автообновление: запрашиваются только кошельки, чьи данные
+        старше интервала из настроек. Сколько бы вкладок ни было открыто и как часто бы ни заходили
+        на главную, к провайдерам уходит не больше одного обновления за интервал — это бережёт
+        квоты вроде Zerion. Кнопка «Обновить» обновляет всё. Параллельные запросы ждут идущее обновление.
+        """
         async with self._refresh_lock:
-            await self._refresh()
+            await self._refresh(only_due)
         return self.view(portfolio_id)
 
     # --- портфолио ---
@@ -151,17 +164,31 @@ class Portfolio:
             if conn.execute("DELETE FROM portfolios WHERE id = ?", (portfolio_id,)).rowcount == 0:
                 raise PortfolioNotFound
 
-    async def _refresh(self) -> None:
+    async def _refresh(self, only_due: bool) -> None:
         keys = self.keys()
         with self.vault.db() as conn:
-            wallets = conn.execute("SELECT id, network, address FROM wallets WHERE hidden = 0").fetchall()
+            wallets = conn.execute(
+                "SELECT w.id, w.network, w.address, s.data, s.fetched_at, s.error, s.error_at FROM wallets w"
+                " LEFT JOIN wallet_state s ON s.wallet_id = w.id WHERE w.hidden = 0"
+            ).fetchall()
+        targets = [w for w in wallets if w["network"] in self.adapters]
+        skipped = []
+        if only_due:
+            due_before = datetime.now(UTC) - timedelta(minutes=self.settings()["refresh_interval_minutes"]) + DUE_SLACK
+            # Последняя попытка — успешная или нет: упавший источник тоже не дёргаем чаще интервала.
+            due = [w for w in targets if _last_attempt(w) is None or _last_attempt(w) < due_before]
+            due_ids = {w["id"] for w in due}
+            skipped = [w for w in targets if w["id"] not in due_ids]
+            targets = due
+            prices, _ = self._cache_get("prices")
+            if not targets and prices and datetime.fromisoformat(prices["at"]) >= due_before:
+                return
         async with new_client(self.transport) as client:
             http = Http(client)
             directory = await self._directory(http, keys.get("coingecko"))
             meta, _ = self._cache_get("token.meta")
             ctx = Context(http, keys, directory, meta or {})
 
-            targets = [w for w in wallets if w["network"] in self.adapters]
             results = await asyncio.gather(*(self._fetch_wallet(w, ctx) for w in targets))
             self._store_results(targets, results)
             self._cache_put("token.meta", ctx.meta)
@@ -183,7 +210,13 @@ class Portfolio:
         self._cache_put("refresh", {"at": _now()})
 
         # Снапшот — только после полного успешного обновления: все источники и цены ответили.
-        complete = prices_ok and all(isinstance(r, Balance) and not r.warning for r in results)
+        # Пропущенные кошельки недавно опрашивались, но их последний результат мог быть ошибкой
+        # или прийти с предупреждением.
+        complete = (
+            prices_ok
+            and all(isinstance(r, Balance) and not r.warning for r in results)
+            and all(w["error"] is None and w["data"] and not json.loads(w["data"]).get("warning") for w in skipped)
+        )
         if complete:
             snapshots.take_if_due(self)
 
